@@ -1,0 +1,129 @@
+COMPOSER INSTALL
+	curl -sS https://getcomposer.org/installer | php;
+	sudo mv composer.phar /usr/local/bin/composer;
+
+APPLICATION CODE
+	cd /var/www/html;
+	git clone git@github.com:iprogrammers/appapi.git
+    cd iplaravel
+
+FOLDER PERMISSIONS
+	sudo chown -R apache storage
+	sudo chown -R apache bootstrap/cache  // if require then only
+	sudo chown -R apache public/admintheme/filemanager/userfiles
+
+FOR DEVELOPER (User development branch)
+	git checkout -b development origin/development (development of release branch for staging)
+	git pull origin development
+
+TOOLKIT (SDK/FRAMEWORK) PACKAGES
+	composer install --no-dev (for development without --no-dev option)
+	composer update --no-dev (for development without --no-dev option)
+	NOTE: DEPENDENCIES get installed to vendor/ directory
+
+    //if you create any new class or route then please run bellow command
+    composer dump-autoload
+
+CREATE DATABASE
+	CREATE DATABASE <dbname> DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CONFIG
+    Create a new file in root ".env"
+    sudo vi .env
+        Add following content in the file
+            APP_ENV=local
+            APP_DEBUG=true
+            APP_KEY=fzgLkv5nQZnA4vJTyzzgsdAiP5fsK4Im
+            DB_HOST=localhost
+            DB_DATABASE=<dbname>
+            DB_USERNAME=<username>
+            DB_PASSWORD=<password>
+            CACHE_DRIVER=memcached
+            SESSION_DRIVER=memcached
+            MAIL_DRIVER=mail
+            MAIL_HOST=<host>
+            MAIL_PORT=110
+            MAIL_USERNAME=<from>
+            MAIL_PASSWORD=<password>
+            MAIL_FROM=<from@server.com>
+            MAIL_NAME=<server.com>
+
+ARTISAN COMMANDS
+	Artisian Commands useful to create base database for laravel and migrate schema with seeding data
+
+	php artisan (list available command)
+	php artisan migrate
+	php artisan migrate --seed
+
+	//Following command is used to create a migration class for the tablename.
+	php artisan migrate:make create_tablename_table --create=tablename
+
+	//for clear artisan cache
+	php artisan cache:clear
+	//Vendor publish command
+	php artisan vendor:publish
+
+	(NOTE : find sql in the database/migrations folder)
+    
+    # modules based migration commands
+        php artisan module:migrate admin
+        php artisan module:seed admin        
+        php artisan module:migrate-refresh --seed admin
+        php artisan module:make-migration create_users_table admin
+
+RUN IN BROWSER
+	localhost/appapi/public/index.php
+	localhost/appapi/public/
+	
+	Get API Access auth token
+	http://localhost/appapi/public/api/oauth/access_token  
+	Post  body param: with content type :application/x-www-form-urlencoded
+	  grant_type=password&client_id=f3d259ddd3ed8ff3843839b&client_secret=4c7f6f8fa93d59c45502c0ae8c4a95b&username=api@api.com&password=7u8i9o0p
+	Response: 
+		  {
+		      "access_token": "E0n5HMfQdsjp30oxV3N0t3LxGFzIn1cfqOn3wXXg",
+		      "token_type": "Bearer",
+		      "expires_in": ​3600,
+		      "refresh_token": "jFJO8ZKltbd0VDSfjSlHTIXjl221qU9lRG91uhKC"
+		  }
+	
+	Get API logged in user detail call
+	curl -H "Authorization: Bearer E0n5HMfQdsjp30oxV3N0t3LxGFzIn1cfqOn3wXXg" http://localhost/api-laravel/public/api/user
+	
+
+<Virtualhost> Setup Commands
+    cd /etc/httpd/conf.d
+    vi default.conf
+
+    <VirtualHost *:80>
+        DocumentRoot /var/www/html
+        ServerName localhost
+
+        Alias /appapi /var/www/html/appapi/public
+
+        <Directory "/var/www/html/appapi/public">
+
+            AllowOverride none
+            Options +FollowSymLinks
+
+            RewriteEngine On
+            RewriteBase /appapi
+
+            # Redirect Trailing Slashes...
+            RewriteRule ^(.*)/$ /$1 [L,R=301]
+	    # Authorization Header
+	    RewriteCond %{HTTP:Authorization} .
+	    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+            # Handle Front Controller...
+            RewriteCond %{REQUEST_FILENAME} !-d
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteRule ^ index.php [L]
+        </Directory>
+    </VirtualHost>
+    // After entry restart apache
+    sudo systemctl restart httpd.service
+
+PHP INI SETTINGS
+	post_max_size = 100M
+	upload_max_filesize = 100M
+	max_file_uploads = 100	
