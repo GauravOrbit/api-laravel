@@ -4,8 +4,8 @@ COMPOSER INSTALL
 
 APPLICATION CODE
 	cd /var/www/html;
-	git clone git@github.com:iprogrammers/appapi.git
-    cd iplaravel
+	git clone git@github.com:GauravOrbit/api-laravel.git
+    cd api-laravel
 
 FOLDER PERMISSIONS
 	sudo chown -R apache storage
@@ -62,15 +62,7 @@ ARTISAN COMMANDS
 	php artisan cache:clear
 	//Vendor publish command
 	php artisan vendor:publish
-
-	(NOTE : find sql in the database/migrations folder)
-    
-    # modules based migration commands
-        php artisan module:migrate admin
-        php artisan module:seed admin        
-        php artisan module:migrate-refresh --seed admin
-        php artisan module:make-migration create_users_table admin
-
+ 
 RUN IN BROWSER
 	localhost/appapi/public/index.php
 	localhost/appapi/public/
@@ -111,9 +103,9 @@ RUN IN BROWSER
 
             # Redirect Trailing Slashes...
             RewriteRule ^(.*)/$ /$1 [L,R=301]
-	    # Authorization Header
-	    RewriteCond %{HTTP:Authorization} .
-	    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+            # Authorization Header
+            RewriteCond %{HTTP:Authorization} .
+            RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
             # Handle Front Controller...
             RewriteCond %{REQUEST_FILENAME} !-d
             RewriteCond %{REQUEST_FILENAME} !-f
