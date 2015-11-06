@@ -47,6 +47,11 @@ return [
             'access_token_ttl' => env('OAUTH_ACCESS_TOKEN_TTL', 3600),
             'auth_code_ttl' => env('OAUTH_ACCESS_TOKEN_TTL', 3600),
         ],
+        'mobile' => [
+            'class' => 'App\Api\v1\Oauth2\Grant\MobileGrant',
+            'access_token_ttl' => env('OAUTH_ACCESS_TOKEN_TTL', 3600),
+            'callback' => 'App\Api\v1\Oauth2\Verifier\OauthMobileVerifier@verify',
+        ],
     ],
 
     /*

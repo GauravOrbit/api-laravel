@@ -95,8 +95,7 @@ return [
     |
     */
 
-    'log' => 'single',
-
+    'log' => 'daily',
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
