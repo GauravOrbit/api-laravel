@@ -30,7 +30,7 @@ return [
     'grant_types' => [
         'password' => [
             'class' => '\League\OAuth2\Server\Grant\PasswordGrant',
-            'access_token_ttl' => env('OAUTH_ACCESS_TOKEN_TTL', 3600),
+            'access_token_ttl' => env('OAUTH_ACCESS_TOKEN_TTL', 36000),
             'callback' => 'App\Api\v1\Oauth2\Verifier\OauthVerifier@verify',
         ],
         'client_credentials' => [

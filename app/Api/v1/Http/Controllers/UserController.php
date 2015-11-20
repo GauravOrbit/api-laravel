@@ -9,7 +9,7 @@
 namespace App\Api\v1\Http\Controllers;
 
 use App\Api\v1\Http\Controllers\BaseApiController;
-use App\User;
+use App\Models\User;
 use App\Api\v1\Http\Transformers\UserTransformer;
 
 /**

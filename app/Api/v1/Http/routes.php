@@ -46,6 +46,11 @@ $api->group(['middleware' => 'api.auth'], function($api) {
      * Route to get single user
      */
     $api->get('users/{id}', ['as' => 'api.users.show', 'uses' => 'App\Api\v1\Http\Controllers\UserController@show']);
+
+    /**
+     * Get data of multi api calls within single call request
+     */
+    $api->post('getdata', ['as' => 'api.calls.getdata', 'uses' => 'App\Api\v1\Http\Controllers\CallsController@getData']);
 });
 
 /*

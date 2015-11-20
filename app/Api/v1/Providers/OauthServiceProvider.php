@@ -11,6 +11,7 @@ namespace App\Api\v1\Providers;
 
 use Dingo\Api\Auth\Auth;
 use Dingo\Api\Auth\Provider\OAuth2;
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 
 class OauthServiceProvider extends ServiceProvider
@@ -23,12 +24,12 @@ class OauthServiceProvider extends ServiceProvider
 
             $provider->setUserResolver(function ($id) {
                 // Logic to return a user by their ID.
-                return \App\User::findOrFail($id);
+                return User::findOrFail($id);
             });
 
             $provider->setClientResolver(function ($id) {
                 // Logic to return a client by their ID.
-                return \App\User::findOrFail($id);
+                return User::findOrFail($id);
             });
 
             return $provider;
