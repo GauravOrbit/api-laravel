@@ -11,6 +11,7 @@ namespace App\Api\v1\Http\Controllers;
 use App\Api\v1\Http\Controllers\BaseApiController;
 use Route;
 use Dingo\Api\Routing\UrlGenerator;
+use Activity;
 
 /**
  * Class UserController
@@ -44,6 +45,7 @@ class CallsController extends BaseApiController
                 throw new \Symfony\Component\HttpKernel\Exception\ConflictHttpException('In valid requested parameter for api call');
             }
         }
+        Activity::log('Mulit request Get Data api call');
         /*
           $params = [];
           $params[0] = ['namespace' => 'App\Api\v1\Http\Controllers', 'route' => 'user', 'params' => ['id', 'name']];
@@ -92,6 +94,7 @@ class CallsController extends BaseApiController
                 throw new \Symfony\Component\HttpKernel\Exception\ConflictHttpException('In valid requested parameter for api call');
             }
         }
+        Activity::log('Mulit request Post Data api call');
         return $results;
     }
 }
