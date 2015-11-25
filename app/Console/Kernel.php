@@ -1,12 +1,12 @@
-<?php
+<?php namespace App\Console;
 
-namespace App\Console;
-
+use DB;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+
     /**
      * The Artisan commands provided by your application.
      *
@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\Inspire::class,
+        \Modules\Api\Console\Commands\FlushOtp::class,
+        \App\Api\v1\Console\Commands\FlushUserActivityLogs::class,
     ];
 
     /**
@@ -25,6 +27,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('inspire')
-                 ->hourly();
+            ->hourly();
+
+        $schedule->command('flush:otp')
+            ->everyMinute();
+
+        $schedule->command('flush:activitylogs')
+            ->hourly();
     }
 }

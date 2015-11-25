@@ -45,5 +45,5 @@ return [
     | reference it here.
     |
     */
-    'beforeHandler' => null,
+    'beforeHandler' => \App\Handlers\BeforeHandler::class,
 ];
