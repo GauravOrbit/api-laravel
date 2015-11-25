@@ -51,6 +51,11 @@ $api->group(['middleware' => 'api.auth'], function($api) {
      * Get data of multi api calls within single call request
      */
     $api->post('getdata', ['as' => 'api.calls.getdata', 'uses' => 'App\Api\v1\Http\Controllers\CallsController@getData']);
+
+    /**
+     * Post data of multi api calls within single call request
+     */
+    $api->post('postdata', ['as' => 'api.calls.postdata', 'uses' => 'App\Api\v1\Http\Controllers\CallsController@postData']);
 });
 
 /*
